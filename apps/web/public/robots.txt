@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /en/scrape
+Disallow: /fa/scrape
+Disallow: /en/recipes
+Disallow: /fa/recipes
+Disallow: /en/history
+Disallow: /fa/history

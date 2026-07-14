@@ -1,0 +1,41 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "scrapestudio-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-07-13",
+  "compatibility_flags": ["global_fetch_strictly_public"],
+  "limits": {
+    "cpu_ms": 10,
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "RATE_LIMITER",
+        "class_name": "RateLimitDurableObject",
+      },
+    ],
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["RateLimitDurableObject"],
+    },
+  ],
+  "vars": {
+    "ALLOWED_ORIGINS": "",
+    "DEMO_ONLY_MODE": "false",
+    "EXPERIMENTAL_BROWSER_ENABLED": "false",
+    "EXTERNAL_FETCH_ENABLED": "false",
+    "FETCH_TIMEOUT_MS": "10000",
+    "MAX_HTML_BYTES": "1048576",
+    "MAX_REDIRECTS": "5",
+    "RATE_LIMIT_DAILY_MAX": "20",
+    "RATE_LIMIT_SHORT_MAX": "5",
+    "RATE_LIMIT_SHORT_WINDOW_SECONDS": "600",
+    "SMART_DETECTION_ENABLED": "true",
+  },
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 0.1,
+  },
+}

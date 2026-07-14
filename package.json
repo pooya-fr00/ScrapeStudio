@@ -1,0 +1,49 @@
+{
+  "name": "scrapestudio",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A free, open-source, bilingual no-code scraping studio for public static web pages.",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@11.7.0",
+  "engines": {
+    "node": ">=24.0.0",
+    "pnpm": ">=11.7.0"
+  },
+  "scripts": {
+    "audit:dependencies": "pnpm audit --audit-level=high",
+    "build": "pnpm --recursive --if-present run build",
+    "build:production": "pnpm build && node scripts/prepare-production-web.mjs && node scripts/check-release-artifacts.mjs",
+    "check": "pnpm check:private-files && pnpm check:security && pnpm check:deployment && pnpm check:docs && pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm test:e2e && pnpm build && pnpm check:bundle && pnpm audit:dependencies",
+    "check:bundle": "node scripts/check-build-budget.mjs",
+    "check:deployment": "node scripts/check-deployment-config.mjs",
+    "check:docs": "node scripts/check-doc-links.mjs",
+    "check:private-files": "node scripts/check-private-files.mjs",
+    "check:release-artifacts": "node scripts/check-release-artifacts.mjs",
+    "check:security": "node scripts/check-csp-compatibility.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint . --max-warnings=0",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "test:integration": "vitest run --project integration",
+    "test:smoke": "node scripts/smoke-production.mjs",
+    "test:unit": "vitest run --project unit",
+    "typecheck": "tsc --project tsconfig.tools.json --noEmit && pnpm --recursive --if-present run typecheck"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.12.1",
+    "@cloudflare/workers-types": "5.20260713.1",
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.61.1",
+    "@types/node": "26.1.1",
+    "eslint": "10.7.0",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "eslint-plugin-react-refresh": "0.5.3",
+    "globals": "17.7.0",
+    "prettier": "3.9.5",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.63.0",
+    "vitest": "4.1.10"
+  }
+}

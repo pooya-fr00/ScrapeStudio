@@ -1,0 +1,98 @@
+name: Production deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: Select DEPLOY_PRODUCTION only after the owner approves the exact origins and release.
+        required: true
+        type: choice
+        options:
+          - CANCEL
+          - DEPLOY_PRODUCTION
+
+permissions:
+  contents: read
+  deployments: write
+
+concurrency:
+  group: production-deployment
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Verify, deploy, and smoke test
+    if: github.ref == 'refs/heads/main' && inputs.confirm == 'DEPLOY_PRODUCTION'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment:
+      name: production
+      url: ${{ vars.PUBLIC_APP_ORIGIN }}
+    env:
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_PAGES_PROJECT: ${{ vars.CLOUDFLARE_PAGES_PROJECT }}
+      CLOUDFLARE_WORKER_NAME: ${{ vars.CLOUDFLARE_WORKER_NAME }}
+      IP_HASH_SALT: ${{ secrets.IP_HASH_SALT }}
+      PUBLIC_API_ORIGIN: ${{ vars.PUBLIC_API_ORIGIN }}
+      PUBLIC_APP_ORIGIN: ${{ vars.PUBLIC_APP_ORIGIN }}
+      SMOKE_FETCH_URL: ${{ vars.SMOKE_FETCH_URL }}
+      VITE_API_BASE_URL: ${{ vars.PUBLIC_API_ORIGIN }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Run complete quality gate
+        run: pnpm check
+
+      - name: Validate protected production configuration
+        run: node scripts/validate-production-environment.mjs
+
+      - name: Prepare exact-origin Worker configuration
+        run: node scripts/create-production-worker-config.mjs
+
+      - name: Dry-run production Worker bundle
+        run: pnpm --filter @scrapestudio/api exec wrangler deploy --config wrangler.production.generated.json --dry-run --outdir dist/production-worker
+
+      - name: Deploy API Worker
+        uses: cloudflare/wrangler-action@v3
+        with:
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          command: deploy --config wrangler.production.generated.json --strict
+          secrets: |
+            IP_HASH_SALT
+          workingDirectory: apps/api
+        env:
+          IP_HASH_SALT: ${{ secrets.IP_HASH_SALT }}
+
+      - name: Build exact-origin frontend release
+        run: pnpm build:production
+
+      - name: Deploy Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          command: pages deploy dist --project-name=${{ vars.CLOUDFLARE_PAGES_PROJECT }} --branch=main --commit-hash=${{ github.sha }}
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          workingDirectory: apps/web
+
+      - name: Run production smoke tests
+        run: pnpm test:smoke

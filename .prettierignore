@@ -1,0 +1,9 @@
+dist
+build
+coverage
+node_modules
+playwright-report
+test-results
+pnpm-lock.yaml
+SCRAPESTUDIO_MASTER_SPEC.md
+tests/fixtures/malformed.html

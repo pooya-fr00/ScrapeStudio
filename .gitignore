@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+.eslintcache
+.vitest-attachments/
+*.tsbuildinfo
+
+# Builds
+dist/
+build/
+coverage/
+playwright-report/
+test-results/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+!.env.production.example
+!**/.env.production.example
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+
+# Cloudflare
+.wrangler/
+wrangler.production.generated.json
+
+# Editors / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log
+pnpm-debug.log*
+
+# Owner-private files
+poya.txt
+**/poya.txt
+PRIVATE_*
+*.private.txt
+
+# Owner-local Codex bootstrap files
+.agents/
+CODEX_EXECUTION_PROMPT.md
+README_FIRST.md

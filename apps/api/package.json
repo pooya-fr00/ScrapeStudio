@@ -1,0 +1,23 @@
+{
+  "name": "@scrapestudio/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": "./dist/index.js",
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json && wrangler deploy --dry-run --outdir dist/worker",
+    "dev": "wrangler dev",
+    "typecheck": "tsc --project tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@scrapestudio/shared": "workspace:*",
+    "hono": "4.12.30",
+    "ipaddr.js": "2.4.0",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "5.20260713.1",
+    "typescript": "6.0.3",
+    "wrangler": "4.110.0"
+  }
+}

@@ -11,20 +11,20 @@ Last updated: 2026-07-14
 
 ## Phase status
 
-| Phase                                | Status                          | Exit gate                                                                  |
-| ------------------------------------ | ------------------------------- | -------------------------------------------------------------------------- |
-| Phase 0 — Repository foundation      | Complete                        | Install, format, lint, typecheck, tests, and build pass                    |
-| Phase 1 — Design foundation and i18n | Complete                        | Localized routes, RTL/LTR, theme, responsive navigation                    |
-| Phase 2 — Safe fetch backend         | Complete                        | SSRF, redirect, timeout, size, content type, and rate-limit tests pass     |
-| Phase 3 — Client extraction core     | Complete                        | Fixture tests pass; malformed HTML is safe                                 |
-| Phase 4 — Scrape workspace           | Complete                        | Built-in end-to-end demo works                                             |
-| Phase 5 — Custom selector builder    | Complete                        | Multi-field recipe can be created without code                             |
-| Phase 6 — Export, history, recipes   | Complete                        | Local data survives reload without an account                              |
-| Phase 7 — Code generator             | Complete                        | Generated Python and JavaScript are syntactically sane                     |
-| Phase 8 — Smart repeated structures  | Complete                        | Bounded worker does not block UI                                           |
-| Phase 9 — Playground and docs        | Complete                        | Reviewer can test without an external site                                 |
-| Phase 10 — Hardening                 | Complete                        | Accessibility, security, performance, localization, and release gates pass |
-| Phase 11 — Deployment                | Ready for owner-approved deploy | Local gates pass; live URL awaits approved external deployment             |
+| Phase                                | Status   | Exit gate                                                                  |
+| ------------------------------------ | -------- | -------------------------------------------------------------------------- |
+| Phase 0 — Repository foundation      | Complete | Install, format, lint, typecheck, tests, and build pass                    |
+| Phase 1 — Design foundation and i18n | Complete | Localized routes, RTL/LTR, theme, responsive navigation                    |
+| Phase 2 — Safe fetch backend         | Complete | SSRF, redirect, timeout, size, content type, and rate-limit tests pass     |
+| Phase 3 — Client extraction core     | Complete | Fixture tests pass; malformed HTML is safe                                 |
+| Phase 4 — Scrape workspace           | Complete | Built-in end-to-end demo works                                             |
+| Phase 5 — Custom selector builder    | Complete | Multi-field recipe can be created without code                             |
+| Phase 6 — Export, history, recipes   | Complete | Local data survives reload without an account                              |
+| Phase 7 — Code generator             | Complete | Generated Python and JavaScript are syntactically sane                     |
+| Phase 8 — Smart repeated structures  | Complete | Bounded worker does not block UI                                           |
+| Phase 9 — Playground and docs        | Complete | Reviewer can test without an external site                                 |
+| Phase 10 — Hardening                 | Complete | Accessibility, security, performance, localization, and release gates pass |
+| Phase 11 — Deployment                | Complete | Public Pages and Worker URLs pass the live production smoke suite          |
 
 ## Current implementation
 
@@ -353,8 +353,8 @@ Last updated: 2026-07-14
 - `pnpm lint`: passed with zero warnings.
 - `pnpm typecheck`: passed for all workspace projects, Playwright configuration, E2E tests, and tooling.
 - `pnpm test:unit`: 35 test files and 181 tests passed.
-- `pnpm test:integration`: 3 test files and 14 tests passed.
-- `pnpm test`: 38 test files and 195 tests passed.
+- `pnpm test:integration`: 4 test files and 18 tests passed.
+- `pnpm test`: 39 test files and 199 tests passed.
 - `pnpm test:e2e`: 8 Chromium tests passed, including three critical product flows and five axe-core WCAG 2.1 A/AA scenarios; monitored pages produced no runtime or console errors.
 - `pnpm build`: passed for every workspace project, including declarations and the Wrangler production dry run without deploying.
 - Worker dry-run output: 667.23 KiB before gzip and 107.81 KiB after gzip.
@@ -363,11 +363,11 @@ Last updated: 2026-07-14
 - `pnpm audit:dependencies`: passed with no known vulnerabilities. Hono and Cloudflare Worker types were updated to current compatible patch releases; TypeScript 6.0.3 remains intentionally pinned for `typescript-eslint` compatibility.
 - Responsive browser QA covered 320×740, 390×844, 768×900, and 1440×900 in Persian and English. It verified dedicated mobile records, desktop/table transitions, 12 product cards and CSS-only color treatments, dark theme, menu overflow/focus behavior, RTL/LTR, landmarks, and no inspected document-level horizontal overflow.
 
-### Phase 11 — 2026-07-14 — ready for owner-approved deploy
+### Phase 11 — 2026-07-14 — complete
 
 - Revalidated Cloudflare Pages Direct Upload, Wrangler, Worker secrets, Worker/Durable Object free-tier availability, Workers limits, and Pages limits against current official documentation.
 - `pnpm check:deployment`: passed; the release path is manual-only, fail-closed, exact-origin, and secret-free.
-- Production Worker config generation passed with reserved test origins; Wrangler dry run passed with the exact CORS origin, public fetch enabled, SQLite Durable Object binding, and 10 ms CPU limit. Nothing was uploaded.
+- Production Worker config generation and Wrangler dry run passed with the exact CORS origin, public fetch enabled, and the SQLite Durable Object binding. Cloudflare applies its Free-plan CPU ceiling; the paid-plan-only explicit CPU field is intentionally absent and regression-tested.
 - `pnpm build:production` passed with reserved test origins; 39 web artifact files passed private-file, source-map, sitemap, robots, and exact-origin CSP checks.
 - `pnpm check`: passed locally: private/security/deployment/doc/format/lint/type gates, 39 Vitest files and 199 tests, 8 Playwright/axe tests, all builds, bundle budgets, and dependency audit.
 - Test split: 181 unit tests and 18 integration tests passed; the integration suite now covers HTTPS-only origins, secret-free Worker generation, manual deployment policy, SPA redirects, and non-indexed local workspace routes.
@@ -375,21 +375,21 @@ Last updated: 2026-07-14
 - Web production output: main JavaScript is 294.77 kB before gzip and 92.14 kB after gzip; CSS is 87.59 kB before gzip and 16.37 kB after gzip.
 - Bundle budgets passed: largest JavaScript asset 287.87 KiB, all JavaScript 573.23 KiB, and largest CSS asset 85.54 KiB.
 - Browser QA against the finalized production artifact covered Persian mobile at 390×844, English mobile playground, and Persian desktop at 1440×900. Direct routes, eight mobile table records, RTL/LTR, localized metadata, landmarks, footer, and absence of inspected horizontal overflow or console warnings/errors passed.
-- No Push, Cloudflare resource creation, secret registration, account connection, or real deployment occurred. The Master Spec live-URL exit criterion and remote GitHub Actions evidence remain pending explicit owner approval and exact production values.
+- The public repository is available at <https://github.com/pooya-fr00/ScrapeStudio> with CI, Dependabot policy, protected production secrets, release templates, and curated repository metadata.
+- Cloudflare Pages is live at <https://scrapestudio.pages.dev> and the Worker API is live at <https://scrapestudio-api.pooya-fr2005.workers.dev>. The exact-origin production smoke passed for English, Persian, robots, sitemap, security headers, API health, CORS allow/deny behavior, and one approved real fetch.
+- Deployment secrets remain encrypted in the GitHub `production` environment. The Cloudflare token has only Pages Write and Workers Scripts Write permissions; no secret or account identifier is committed or exposed to the browser bundle.
 
 ## Known risks
 
-- Cloudflare limits were revalidated on 2026-07-14 but remain third-party policy and must be checked again immediately before deployment.
+- Cloudflare limits were revalidated immediately before the 2026-07-14 deployment but remain third-party policy and must be checked again before future releases.
 - Hostname resolution relies on Cloudflare's strictly-public global fetch path in addition to application-level URL and IP-literal checks; another runtime needs an equivalent DNS/rebinding defense.
-- Real Cloudflare deployment, production origins, resource names, and production secrets remain intentionally unconfigured until owner approval.
 - Production must configure `VITE_API_BASE_URL` when the frontend and Worker do not share an origin; local development uses the Vite API proxy.
 - Table header inference and `srcset` selection are deterministic best-effort strategies rather than full browser layout reconstruction.
 - Static HTML analysis cannot observe content created later by remote page JavaScript.
 - IndexedDB data remains device- and browser-local and can be cleared by browser privacy settings or storage eviction; recipe JSON export is the portable backup path.
 - Custom selector inspection and bounded smart-snapshot construction still run briefly on the main thread; repeated-structure scoring runs in a dedicated Worker with a hard timeout.
 - Repeated-structure scores are relative heuristic rankings, not calibrated probabilities; unusual but structurally homogeneous layouts can still create false positives or false negatives.
-- The sitemap, robots reference, and exact API CSP are generated and tested with reserved dry-run origins; their final values require the approved live origins.
-- Production-origin Lighthouse, deployed-header verification, live fetch smoke, and real-network measurements cannot be completed before the owner-approved Phase 11 destination exists.
+- The live sitemap, robots reference, exact API CSP, deployed security headers, CORS boundary, health endpoint, and approved fetch path are covered by the production smoke suite.
+- A production-origin Lighthouse recording is useful future performance evidence but is not a substitute for the enforced bundle budgets, automated accessibility suite, or live security smoke.
 - Automated axe scans cannot replace a human screen-reader and 200% zoom review; both remain explicit pre-publication items in the release checklist.
 - The source CSP remains a build template; `build:production` replaces its broad HTTPS token with the exact approved API origin and the release-artifact gate rejects any remaining wildcard.
-- Git currently reports the entire project as untracked because no repository baseline commit exists; CI and release evidence become meaningful only after the owner establishes that baseline without including private files.

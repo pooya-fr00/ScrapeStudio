@@ -3,14 +3,31 @@ import { productionOrigin } from './lib/deployment-config.mjs';
 const appOrigin = productionOrigin(process.env.PUBLIC_APP_ORIGIN, 'PUBLIC_APP_ORIGIN');
 const apiOrigin = productionOrigin(process.env.PUBLIC_API_ORIGIN, 'PUBLIC_API_ORIGIN');
 const timeoutMs = 15_000;
+const readAttempts = 6;
+const retryDelayMs = 5_000;
 
 async function request(url, init = {}) {
   const response = await fetch(url, { ...init, signal: AbortSignal.timeout(timeoutMs) });
   return response;
 }
 
+async function readWithPropagationRetry(url, init = {}) {
+  let lastError;
+  for (let attempt = 1; attempt <= readAttempts; attempt += 1) {
+    try {
+      const response = await request(url, init);
+      if (response.status < 500 || attempt === readAttempts) return response;
+    } catch (error) {
+      lastError = error;
+      if (attempt === readAttempts) throw error;
+    }
+    await new Promise((resolve) => setTimeout(resolve, retryDelayMs));
+  }
+  throw lastError ?? new Error('Production read retry exhausted.');
+}
+
 async function expectOk(path, contains) {
-  const response = await request(`${appOrigin}${path}`);
+  const response = await readWithPropagationRetry(`${appOrigin}${path}`);
   if (!response.ok) throw new Error(`${path} returned ${response.status}.`);
   const body = await response.text();
   if (contains && !body.includes(contains)) throw new Error(`${path} is missing ${contains}.`);
@@ -46,7 +63,7 @@ if (!connectTokens?.includes(apiOrigin) || connectTokens.includes('https:')) {
   throw new Error('Frontend CSP does not restrict connections to the exact API origin.');
 }
 
-const health = await request(`${apiOrigin}/api/v1/health`);
+const health = await readWithPropagationRetry(`${apiOrigin}/api/v1/health`);
 const healthBody = await health.json();
 if (!health.ok || healthBody?.ok !== true || healthBody?.service !== 'scrapestudio-api') {
   throw new Error(`API health smoke failed with ${health.status}.`);

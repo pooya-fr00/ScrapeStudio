@@ -1,6 +1,6 @@
 # Production deployment and operations
 
-This runbook covers the free public ScrapeStudio release. The repository is production-ready, but it intentionally contains no live account ID, token, salt, resource ID, or claimed public URL. Creating Cloudflare resources, adding secrets, pushing the repository, and starting a real deployment require explicit owner approval.
+This runbook covers the free public ScrapeStudio release. The owner-approved production deployment is live at <https://scrapestudio.pages.dev>, with its API at <https://scrapestudio-api.pooya-fr2005.workers.dev>. Tokens, salts, and account identifiers remain outside the repository in the protected GitHub `production` environment.
 
 ## Topology and safety model
 

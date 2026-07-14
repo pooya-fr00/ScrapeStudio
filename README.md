@@ -7,7 +7,7 @@ ScrapeStudio is a free, open-source, bilingual no-code studio for extracting str
 
 It combines a security-focused fetch gateway with detached browser-side parsing, editable multi-field recipes, safe exports, local history, starter-code generation, and bounded repeated-structure detection. No account is required.
 
-> **Release status:** the product and guarded production pipeline are release-ready. A public live URL will be added only after the owner approves the exact Cloudflare resources, origins, secrets, and deployment; this README does not advertise a placeholder as live.
+> **Release status:** the free public release is live at [scrapestudio.pages.dev](https://scrapestudio.pages.dev/en), backed by the guarded Cloudflare Worker deployment documented in this repository.
 
 Designed and built by [Pouya Fereydouni](https://github.com/pooya-fr00) as a production-minded full-stack portfolio project.
 
@@ -148,7 +148,12 @@ Start with:
 
 ## Live demo
 
-The production URL will be added after the owner-approved deployment. The repository already contains a manual, protected Cloudflare workflow, exact-origin release preparation, artifact checks, and live smoke tests; none of them fabricate a deployment result.
+- [Open ScrapeStudio in English](https://scrapestudio.pages.dev/en)
+- [باز کردن ScrapeStudio به فارسی](https://scrapestudio.pages.dev/fa)
+- [Open the product playground](https://scrapestudio.pages.dev/en/playground/products)
+- [Check the public API health endpoint](https://scrapestudio-api.pooya-fr2005.workers.dev/api/v1/health)
+
+Production uses an exact-origin CSP and CORS allowlist. Deployment remains manual and protected by the GitHub `production` environment, the complete quality gate, and post-deploy live smoke tests.
 
 ## Responsible use
 

@@ -33,11 +33,13 @@ describe('production deployment preparation', () => {
       const config = JSON.parse(await readFile(output, 'utf8')) as {
         name: string;
         vars: Record<string, string>;
+        limits?: unknown;
       };
       expect(config.name).toBe('scrapestudio-api');
       expect(config.vars.ALLOWED_ORIGINS).toBe('https://app.scrapestudio.example');
       expect(config.vars.EXTERNAL_FETCH_ENABLED).toBe('true');
       expect(config.vars).not.toHaveProperty('IP_HASH_SALT');
+      expect(config).not.toHaveProperty('limits');
     } finally {
       await rm(temporary, { force: true, recursive: true });
     }

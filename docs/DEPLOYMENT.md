@@ -57,7 +57,7 @@ The job then:
 8. deploys the verified `dist` directory to the existing Pages project;
 9. runs production smoke tests.
 
-`cloudflare/wrangler-action` is used for both uploads; its documented Pages and secret inputs are at <https://github.com/cloudflare/wrangler-action>. The repository pins Wrangler itself through the lockfile and runs a local production dry run before either upload.
+The lockfile-pinned Wrangler CLI performs both uploads. The Worker secret is supplied through a mode-`0600` temporary file that is removed when the deployment step exits; the value is never printed or committed. A local production dry run runs before either upload.
 
 ## Smoke coverage
 
@@ -85,7 +85,7 @@ The smoke command has a 15-second deadline per request and never prints fetched 
 
 Revalidated against official Cloudflare documentation on 2026-07-14; limits and pricing can change and must be checked again before each public release.
 
-- Workers Free: 100,000 requests per UTC day, 10 ms CPU per invocation, 128 MB memory, and 50 external subrequests per invocation. The project explicitly configures the 10 ms CPU ceiling. See <https://developers.cloudflare.com/workers/platform/limits/> and <https://developers.cloudflare.com/workers/platform/pricing/>.
+- Workers Free: 100,000 requests per UTC day, 10 ms CPU per invocation, 128 MB memory, and 50 external subrequests per invocation. Cloudflare applies the Free-plan CPU ceiling automatically; the configuration intentionally omits the paid-plan-only explicit CPU limit field. See <https://developers.cloudflare.com/workers/platform/limits/> and <https://developers.cloudflare.com/workers/platform/pricing/>.
 - Durable Objects are available on the Free plan only with the SQLite storage backend. ScrapeStudio uses SQLite-backed objects and stores quota counters, not fetched HTML or raw IPs.
 - Pages Free: 500 builds per month, one concurrent build, 20-minute build timeout, 20,000 files per site, 25 MiB maximum per asset, and up to 100 custom domains per project. Direct Upload deployments are built in GitHub, so the checked artifact remains the release source. See <https://developers.cloudflare.com/pages/platform/limits/>.
 - Product-side survival limits are stricter than platform maxima: five fetches per 10 minutes, 20 per UTC day per anonymous identity, 10-second fetch timeout, 1 MiB HTML ceiling, five redirects, bounded result rows, and browser-rendered scraping disabled.

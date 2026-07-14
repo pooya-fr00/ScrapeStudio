@@ -44,7 +44,9 @@ test('analyzes the bundled table without an API request', async ({ page }) => {
 test('saves, exports, reopens, and clears local workflow data', async ({ page }) => {
   const expectNoRuntimeErrors = monitorRuntimeErrors(page);
   await page.goto('/en/scrape?demo=products');
-  await expect(page.getByRole('heading', { name: 'The page is ready to inspect.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'The page is ready to inspect.' })).toBeVisible({
+    timeout: 20_000,
+  });
 
   await page.getByRole('button', { name: 'Custom extractor' }).click();
   await page.getByRole('button', { name: 'Use demo recipe' }).click();

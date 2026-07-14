@@ -37,7 +37,6 @@ jobs:
       PUBLIC_API_ORIGIN: ${{ vars.PUBLIC_API_ORIGIN }}
       PUBLIC_APP_ORIGIN: ${{ vars.PUBLIC_APP_ORIGIN }}
       SMOKE_FETCH_URL: ${{ vars.SMOKE_FETCH_URL }}
-      VITE_API_BASE_URL: ${{ vars.PUBLIC_API_ORIGIN }}
 
     steps:
       - name: Check out repository
@@ -84,6 +83,8 @@ jobs:
 
       - name: Build exact-origin frontend release
         run: pnpm build:production
+        env:
+          VITE_API_BASE_URL: ${{ vars.PUBLIC_API_ORIGIN }}
 
       - name: Deploy Cloudflare Pages
         uses: cloudflare/wrangler-action@v3

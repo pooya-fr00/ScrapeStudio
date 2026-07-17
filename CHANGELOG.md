@@ -4,7 +4,8 @@ All notable public changes to ScrapeStudio are documented here. The project foll
 
 ## [Unreleased]
 
-- No unreleased public changes yet.
+- Clarified live-release and security-reporting status across public documentation.
+- Added a three-step playground path, audience-based documentation routes, Persian repository overview, support routes, and retained `v1.0.0` release evidence.
 
 ## [1.0.0] — 2026-07-14
 

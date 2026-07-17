@@ -1,6 +1,6 @@
 # ScrapeStudio Implementation Status
 
-Last updated: 2026-07-14
+Last updated: 2026-07-17
 
 ## Scope guardrails
 
@@ -90,7 +90,7 @@ Last updated: 2026-07-14
 - Public bilingual documentation for methodology, security, limitations, privacy, responsible use, and project background, plus focused guides for table, link, image, metadata, and custom-selector extraction.
 - Localized canonical, Open Graph, and alternate-language metadata on public documentation and playground routes.
 - Route-level lazy loading for workspace, local-data, playground, and documentation surfaces so the expanded public content does not inflate the main production bundle unnecessarily.
-- Maintainer-facing `README.md`, `SECURITY.md`, `CONTRIBUTING.md`, and playground/public-documentation notes that accurately describe the current free release without implying a live deployment.
+- Maintainer-facing `README.md`, `SECURITY.md`, `CONTRIBUTING.md`, and playground/public-documentation notes that accurately describe the live free release and its deployment boundary.
 - Playwright critical-flow coverage for locale/direction switching, mobile focus management, no-network table analysis, custom extraction, JSON download, local recipe save/reopen, history creation, and history clearing.
 - Automated axe-core WCAG 2.1 A/AA scans across English and Persian landing, documentation, playground, populated workspace, and open mobile-dialog states.
 - SPA route focus management, keyboard-safe dialog dismissal, and deterministic focus restoration for every mobile-menu close path.

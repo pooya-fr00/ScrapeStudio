@@ -3,11 +3,19 @@
 [![CI](https://github.com/pooya-fr00/ScrapeStudio/actions/workflows/ci.yml/badge.svg)](https://github.com/pooya-fr00/ScrapeStudio/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-8b93ff.svg)](LICENSE)
 
+[English](README.md) | [فارسی](README.fa.md)
+
 ScrapeStudio is a free, open-source, bilingual no-code studio for extracting structured data from supported public static web pages.
 
 It combines a security-focused fetch gateway with detached browser-side parsing, editable multi-field recipes, safe exports, local history, starter-code generation, and bounded repeated-structure detection. No account is required.
 
 > **Release status:** the free public release is live at [scrapestudio.pages.dev](https://scrapestudio.pages.dev/en), backed by the guarded Cloudflare Worker deployment documented in this repository.
+
+## Try ScrapeStudio in three steps
+
+1. Open the bundled [product playground](https://scrapestudio.pages.dev/en/playground/products).
+2. Select **Analyze this demo**. ScrapeStudio loads the bundled HTML into the workspace without requesting an external site or consuming public fetch quota.
+3. Review the quick results, open **Custom extractor**, choose **Use demo recipe**, and run it. You can then save the recipe locally or export the result as JSON or CSV.
 
 Designed and built by [Pouya Fereydouni](https://github.com/pooya-fr00) as a production-minded full-stack portfolio project.
 
@@ -134,23 +142,42 @@ docs                     Architecture and implementation records
 tests/fixtures           Original deterministic HTML fixtures
 ```
 
-Start with:
+Published product releases are versioned through Git tags and [CHANGELOG.md](CHANGELOG.md); the current public release is [`v1.0.0`](https://github.com/pooya-fr00/ScrapeStudio/releases/tag/v1.0.0). The workspace packages intentionally remain private at `0.0.0` because they are not published independently.
 
-- [Implementation status](docs/IMPLEMENTATION_STATUS.md)
-- [Production deployment and operations](docs/DEPLOYMENT.md)
-- [Release history](CHANGELOG.md)
-- [Master specification](SCRAPESTUDIO_MASTER_SPEC.md)
-- [Secure fetch architecture](docs/SECURE_FETCH.md)
+## Documentation paths
+
+### For users
+
+- **Live demo:** [English](https://scrapestudio.pages.dev/en) | [Persian](https://scrapestudio.pages.dev/fa)
+- **Playground:** [English](https://scrapestudio.pages.dev/en/playground) | [Persian](https://scrapestudio.pages.dev/fa/playground)
+- **Documentation:** [English](https://scrapestudio.pages.dev/en/docs) | [Persian](https://scrapestudio.pages.dev/fa/docs)
+- **Limitations:** [English](https://scrapestudio.pages.dev/en/limitations) | [Persian](https://scrapestudio.pages.dev/fa/limitations)
+- **Privacy:** [English](https://scrapestudio.pages.dev/en/privacy) | [Persian](https://scrapestudio.pages.dev/fa/privacy)
+- **Responsible use:** [English](https://scrapestudio.pages.dev/en/responsible-use) | [Persian](https://scrapestudio.pages.dev/fa/responsible-use)
+
+### For developers
+
+- [Local setup](#run-locally)
+- [Repository map](#repository-map)
 - [Extraction core](docs/EXTRACTION_CORE.md)
-- [Local data and export](docs/LOCAL_DATA_AND_EXPORT.md)
-- [Smart repeated structures](docs/SMART_REPEATED_STRUCTURES.md)
 - [Code generator](docs/CODE_GENERATOR.md)
+- [Contributing](CONTRIBUTING.md)
 
-## Live demo
+### For technical and security review
+
+- [Architecture](#architecture)
+- [Secure fetch architecture](docs/SECURE_FETCH.md)
+- [Hardening baseline](docs/HARDENING.md)
+- [Production deployment and operations](docs/DEPLOYMENT.md)
+- [Implementation status](docs/IMPLEMENTATION_STATUS.md)
+- [v1.0.0 release evidence](docs/RELEASE_EVIDENCE.md)
+
+The [master specification](SCRAPESTUDIO_MASTER_SPEC.md), [release history](CHANGELOG.md), [local data and export notes](docs/LOCAL_DATA_AND_EXPORT.md), and [smart-detection design](docs/SMART_REPEATED_STRUCTURES.md) provide deeper implementation context.
+
+## Production endpoints
 
 - [Open ScrapeStudio in English](https://scrapestudio.pages.dev/en)
 - [باز کردن ScrapeStudio به فارسی](https://scrapestudio.pages.dev/fa)
-- [Open the product playground](https://scrapestudio.pages.dev/en/playground/products)
 - [Check the public API health endpoint](https://scrapestudio-api.pooya-fr2005.workers.dev/api/v1/health)
 
 Production uses an exact-origin CSP and CORS allowlist. Deployment remains manual and protected by the GitHub `production` environment, the complete quality gate, and post-deploy live smoke tests.
@@ -158,6 +185,10 @@ Production uses an exact-origin CSP and CORS allowlist. Deployment remains manua
 ## Responsible use
 
 Use ScrapeStudio only for public pages you are allowed to access. Keep collection proportionate, respect source-site rules and applicable law, avoid unnecessary personal or sensitive data, and verify extracted records before publishing or relying on them.
+
+## Support
+
+Use [SUPPORT.md](SUPPORT.md) to choose the correct path for a bug, feature request, general question, or private security report. Security vulnerabilities must not be posted in a public issue.
 
 ## Contributing and license
 

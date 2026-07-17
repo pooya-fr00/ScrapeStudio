@@ -1,0 +1,33 @@
+name: General question
+description: Ask a public usage, documentation, or contribution question.
+title: 'question: '
+body:
+  - type: markdown
+    attributes:
+      value: Search the documentation and existing issues first. Use a private security advisory for vulnerabilities.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Using the product
+        - Documentation
+        - Local development
+        - Contributing
+        - Other public question
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: Include the minimum public context needed to answer the question.
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety check
+      options:
+        - label: This question contains no password, token, personal data, private URL, or vulnerability detail.
+          required: true

@@ -1,6 +1,8 @@
-# Release checklist
+# Release checklist template
 
-Use this checklist for the free public release. Record the commit, reviewer, date, production URLs, and command output in the release issue or pull request. Do not mark production-only items complete against localhost or a dry run.
+Use this reusable checklist when preparing a free public release. Its unchecked boxes describe work to perform for the next release; they are not a claim that `v1.0.0` omitted those checks. Record the commit, reviewer, date, production URLs, and command output in the release issue or pull request.
+
+The repository keeps the verified production record for `v1.0.0` in [RELEASE_EVIDENCE.md](./RELEASE_EVIDENCE.md). Do not copy completed states from that record into a future release without new evidence, and do not mark production-only items complete against localhost or a dry run.
 
 ## Source and automated gate
 
@@ -42,14 +44,14 @@ Use this checklist for the free public release. Record the commit, reviewer, dat
 
 ## Production-only Phase 11 gate
 
-- [x] Approve the exact frontend and API origins before deployment.
-- [x] Revalidate current Cloudflare free-tier limits and deployment behavior against official documentation.
-- [x] Configure production variables and secrets outside the repository.
-- [x] Run `pnpm build:production` with the exact origins; verify the generated sitemap, `robots.txt`, and exact API CSP.
-- [x] Verify README live links and truthful screenshots from the finalized release artifact.
-- [x] Deploy the frontend and API only after owner approval.
-- [x] Run live health, fetch, playground, CORS allow/deny, and security-header smoke tests.
-- [x] Keep rate-limit, timeout, redirect, SSRF, content-type, and oversized-response edge cases in deterministic integration tests rather than destructive production probes.
-- [x] Confirm no secrets or private files exist in the checked deployment artifacts.
-- [x] Record the final frontend URL, API URL, free-tier limits, and rollback procedure in [DEPLOYMENT.md](./DEPLOYMENT.md).
-- [x] Retain the successful protected GitHub Actions run as release evidence.
+- [ ] Approve the exact frontend and API origins before deployment.
+- [ ] Revalidate current Cloudflare free-tier limits and deployment behavior against official documentation.
+- [ ] Configure production variables and secrets outside the repository.
+- [ ] Run `pnpm build:production` with the exact origins; verify the generated sitemap, `robots.txt`, and exact API CSP.
+- [ ] Verify README live links and truthful screenshots from the finalized release artifact.
+- [ ] Deploy the frontend and API only after owner approval.
+- [ ] Run live health, fetch, playground, CORS allow/deny, and security-header smoke tests.
+- [ ] Keep rate-limit, timeout, redirect, SSRF, content-type, and oversized-response edge cases in deterministic integration tests rather than destructive production probes.
+- [ ] Confirm no secrets or private files exist in the checked deployment artifacts.
+- [ ] Record the final frontend URL, API URL, free-tier limits, and rollback procedure in [DEPLOYMENT.md](./DEPLOYMENT.md).
+- [ ] Retain the successful protected GitHub Actions run as release evidence.
